@@ -17,10 +17,11 @@ body {
     color: #333;
     line-height: 1.6;
     overflow-x: hidden; /* Prevents horizontal scroll from animations */
+    padding-top: 70px; /* Reserve space for fixed navbar */
 }
 
 .hero + * {
-    padding-top: 70px; /* Adjust this value based on your navbar height */
+    padding-top: 0; /* Body now reserves space; no extra offset needed */
 }
 
 a {
@@ -43,26 +44,35 @@ img {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 5%;
-    background-color: transparent; /* Changed for transparent header */
-    box-shadow: none; /* Removed default shadow */
+    background-color: rgba(255, 255, 255, 0.18); /* Lighter glass */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.28);
     position: fixed; /* Changed to fixed for overlay effect */
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    transition: background-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease;
+    backdrop-filter: blur(12px) saturate(120%);
+    -webkit-backdrop-filter: blur(12px) saturate(120%);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
 }
 
 .navbar.scrolled {
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.13), inset 0 1px 0 rgba(255,255,255,0.32);
 }
 
 
 .nav-logo img {
-    height: 50px;
+    height: 65px; /* Increased from 50px */
+    transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+.nav-logo img:hover {
+    transform: scale(1.05); /* Subtle hover effect */
 }
 
 .nav-container {
@@ -208,6 +218,7 @@ img {
     justify-content: center;
     text-align: center;
     color: #fff;
+    margin-top: -70px; /* Pull hero under the glass header */
 }
 
 .hero-video-wrapper {
@@ -475,7 +486,6 @@ footer {
     padding-top: 2rem;
 }
 
-/* --- Page Header for Inner Pages --- */
 .page-header {
     padding: 4rem 5%;
     background-color: #FDFBF5; /* Lighter cream for sections */
@@ -630,7 +640,7 @@ footer {
 .team-section {
     padding: 5rem 5%;
     text-align: center;
-    background-color: #FDFBF5; /* Lighter cream for sections */
+    background-color: #FDFBF5;
 }
 
 .team-section h2 {
@@ -696,6 +706,19 @@ footer {
     object-fit: cover;
 }
 
+/* Emoji replacement for service images */
+.service-emoji {
+    width: 200px;
+    min-width: 200px; /* Keep column width consistent */
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 110px; /* Scales emoji nicely in 200px square */
+    line-height: 1;
+    background: transparent;
+}
+
 .service-page-content {
     padding: 1rem;
 }
@@ -723,6 +746,7 @@ footer {
 
 .gallery-page-item {
     overflow: hidden;
+    text-align: center; /* Center captions */
 }
 
 .gallery-page-item img {
@@ -735,6 +759,71 @@ footer {
 .gallery-page-item:hover img {
     transform: scale(1.1);
     filter: brightness(0.8);
+}
+
+/* Emoji replacement for gallery items */
+.gallery-emoji {
+    width: 100%;
+    height: 220px; /* approximate visual height similar to typical thumbs */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 120px;
+    line-height: 1;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    background: transparent;
+}
+
+.gallery-page-item:hover .gallery-emoji {
+    transform: scale(1.06);
+    filter: brightness(0.95);
+}
+
+.gallery-caption {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+    color: #555;
+    font-weight: 500;
+}
+
+.emoji-note {
+    text-align: center;
+    margin: 2rem auto 0;
+    color: #666;
+    font-size: 1.05rem;
+    font-style: italic;
+    max-width: 600px;
+    line-height: 1.5;
+    padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+    .gallery-emoji { height: 200px; font-size: 96px; }
+    .gallery-caption { font-size: 0.9rem; padding: 0.3rem 0.65rem; }
+    .emoji-note { font-size: 0.95rem; }
+}
+
+/* --- Services CTA Button --- */
+.services-cta-container {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 0 1rem;
+}
+
+.services-cta-container .cta-button {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.services-cta-container .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* --- Responsive Design --- */
@@ -776,14 +865,17 @@ footer {
     }
     .service-page-card { flex-direction: column; }
     .service-page-card img { width: 100%; height: 200px; }
+    .service-page-card .service-emoji { width: 100%; min-width: 0; height: 200px; font-size: 96px; }
     
     .nav-container {
         display: block; position: fixed; right: -100%; top: 70px; width: 100%; max-width: 100%;
-        background: linear-gradient(to bottom, #ffffff 0%, #fafafa 100%);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        background: rgba(255, 255, 255, 0.75); /* Lighter frosted drawer */
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255,255,255,0.32);
         transition: right 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         overflow: hidden; z-index: 999;
-        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(14px) saturate(140%);
+        -webkit-backdrop-filter: blur(14px) saturate(140%);
+        border-top: 1px solid rgba(255,255,255,0.5);
     }
     .nav-container.active { right: 0; animation: slideInRight 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
     @keyframes slideInRight { from { right: -100%; opacity: 0; } to { right: 0; opacity: 1; } }

@@ -22,16 +22,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Navbar scroll effect
+    // Navbar scroll effect + initial state (for pages without hero)
     const navbar = document.querySelector('.navbar');
-    if(navbar) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+    const hasHero = !!document.querySelector('.hero');
+    if (navbar) {
+        const setNavbarState = () => {
+            const shouldBeScrolled = window.scrollY > 50 || !hasHero;
+            navbar.classList.toggle('scrolled', shouldBeScrolled);
+        };
+        // Set on load
+        setNavbarState();
+        // Update on scroll
+        window.addEventListener('scroll', setNavbarState);
     }
 
 
